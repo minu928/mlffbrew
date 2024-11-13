@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Dict, Union, Any, List
 from numpy.typing import NDArray
 
 
@@ -12,3 +13,5 @@ Coords = NDArray[npf64]
 Energy = NDArray[npf64]
 Force = NDArray[npf64]
 Atoms = NDArray[npstr]
+
+ScriptData = Dict[str, Union[Dict, str]]

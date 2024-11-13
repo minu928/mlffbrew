@@ -1,9 +1,11 @@
+from mlffbrew.typing import List, npstr
+
 __all__ = ["build"]
 
 
 def build(
-    script,
-    coords_files: list[str],
+    script: str,
+    coords_files: List[npstr],
     *,
     workspace: str = "./",
     folderhead: str = "cp2k",
@@ -15,11 +17,11 @@ def build(
         import os
         import atombrew as atb
         from copy import deepcopy
-        from mlffbrew.programs.cp2k import scripter
+        from mlffbrew.programs import cp2k
     except:
         raise ImportError("Can Not Import.")
 
-    script_info = scripter.read(script) if isinstance(script, str) else script
+    script_info = cp2k.scripter.read(script) if isinstance(script, str) else script
     for i, coords_file in enumerate(coords_files):
         folder_path = os.path.join(workspace, f"{folderhead}.{str(i).zfill(maxint)}")
         os.makedirs(folder_path, exist_ok=exist_ok)
@@ -32,8 +34,8 @@ def build(
         # * Write Script
         box = home.box
         data = deepcopy(script_info)
-        data = scripter.modify_coord(data=data)
-        data = scripter.modify_box(data=data, box=box)
-        lines = scripter.write(data=data)
+        data = cp2k.scripter.modify_coord(data=data)
+        data = cp2k.scripter.modify_box(data=data, box=box)
+        lines = cp2k.scripter.write(data=data)
         with open(os.path.join(folder_path, "run.inp"), "w+") as f:
             f.writelines(lines)
