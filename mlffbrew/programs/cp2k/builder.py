@@ -15,7 +15,7 @@ def build(
         import os
         import atombrew as atb
         from copy import deepcopy
-        from samsarabrew.program.cp2k import scripter
+        from mlffbrew.programs.cp2k import scripter
     except:
         raise ImportError("Can Not Import.")
 
