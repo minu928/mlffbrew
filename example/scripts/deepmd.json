@@ -1,0 +1,94 @@
+{
+    "model": {
+        "type_map": [
+            "H",
+            "O",
+            "N",
+            "C"
+        ],
+        "descriptor": {
+            "type": "se_e2_a",
+            "sel": [
+                100,
+                58,
+                24,
+                14
+            ],
+            "rcut_smth": 0.5,
+            "rcut": 6.0,
+            "neuron": [
+                25,
+                50,
+                100
+            ],
+            "resnet_dt": false,
+            "axis_neuron": 12,
+            "seed": 434652767,
+            "activation_function": "gelu_tf"
+        },
+        "fitting_net": {
+            "neuron": [
+                240,
+                240,
+                240
+            ],
+            "resnet_dt": false,
+            "seed": 1668093392
+        }
+    },
+    "learning_rate": {
+        "type": "exp",
+        "decay_steps": 5000,
+        "start_lr": 0.001,
+        "stop_lr": 3.51e-08,
+        "_comment": "that's all"
+    },
+    "loss": {
+        "start_pref_e": 0.02,
+        "limit_pref_e": 1,
+        "start_pref_f": 1000,
+        "limit_pref_f": 1,
+        "start_pref_v": 0.02,
+        "limit_pref_v": 1
+    },
+    "training": {
+        "_set_prefix": "set",
+        "stop_batch": 400000,
+        "_batch_size": "auto",
+        "disp_file": "lcurve.out",
+        "disp_freq": 100,
+        "numb_test": 4,
+        "save_freq": 100,
+        "save_ckpt": "model.ckpt",
+        "disp_training": true,
+        "time_training": true,
+        "profiling": false,
+        "profiling_file": "timeline.json",
+        "_comment": "that's all",
+        "systems": [
+            "000/DATA",
+            "001/DATA"
+        ],
+        "batch_size": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "seed": 2288327908
+    }
+}

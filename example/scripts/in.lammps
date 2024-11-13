@@ -1,0 +1,41 @@
+variable        NSTEPS          equal V_NSTEPS
+variable        TEMP            equal V_TEMP
+variable        PRES            equal V_PRES
+variable        THERMO_FREQ     equal V_THERMO
+variable        DUMP            equal V_DUMP
+variable        TAU_T           equal 0.100000
+variable        TAU_P           equal 0.500000
+
+
+units           metal
+boundary        p p p
+atom_style      atomic
+
+neighbor        1.0 bin
+
+box          tilt large
+if "${restart} > 0" then "read_restart dpgen.restart.*" else "read_data conf.lmp"
+change_box   all triclinic
+mass            1 1.008000
+mass            2 15.999000
+mass            3 14.006700
+mass            4 12.011000
+
+
+variable        time_hr equal cpuremain/3600
+
+pair_style      deepmd ../graph.000.pb ../graph.001.pb ../graph.002.pb ../graph.003.pb  out_freq ${THERMO_FREQ} out_file model_devi.out 
+pair_coeff      * *
+
+fix            dpgen_plm
+thermo_style    custom step v_time_hr temp pe ke etotal press vol lx ly lz xy xz yz
+thermo          ${THERMO_FREQ}
+dump           dpgen_dump
+
+restart         10000 dpgen.restart
+
+if "${restart} == 0" then "velocity        all create ${TEMP} 199982 mom yes rot yes dist gaussian"
+fix             1 all npt temp ${TEMP} ${TEMP} ${TAU_T} iso ${PRES} ${PRES} ${TAU_P}
+
+timestep        0.000500
+run             ${NSTEPS} upto

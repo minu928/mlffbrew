@@ -1,0 +1,8 @@
+# * PIP INSTALL FILES
+*build
+*.egg-info*
+# * CACHE FILES
+*__pycache__*
+*tmp*
+*.log
+*.DS*
