@@ -1,5 +1,4 @@
 from typing import Dict
-from scipy import constants
 from dataclasses import dataclass
 
 
@@ -11,8 +10,8 @@ class UnitDictionaries:
     special: Dict[str, str] = None
 
     def __post_init__(self):
-        self.length = {"angstrom": 1.0, "nm": 10.0, "bohr": constants.value("atomic unit of length") * 1e10, "m": 1e10}
-        self.energy = {"J": 1.0, "eV": constants.eV, "hatree": constants.value("atomic unit of energy")}
+        self.length = {"angstrom": 1.0, "nm": 10.0, "bohr": 0.529177210903, "m": 1e10}
+        self.energy = {"J": 1.0, "eV": 1.602176634e-19, "hatree": 4.3597447222071e-18}
         self.header = {"G": "1e9*", "M": "1e6*"}
         self.special = {"Pa": "J/m^3", "N": "J/m"}
 

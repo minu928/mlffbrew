@@ -1,5 +1,5 @@
 from typing import Tuple
-from samsarabrew.dataclasses import FrameData, FrameUnit
+from mlffbrew.dataclasses import FrameData, FrameUnit
 
 
 def parse_logfile(logfile: str) -> Tuple[FrameData, FrameUnit]:

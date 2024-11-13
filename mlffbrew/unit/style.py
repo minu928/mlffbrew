@@ -1,4 +1,4 @@
-from samsarabrew.dataclasses import FrameUnit
+from mlffbrew.dataclasses import FrameUnit
 
 
 metal = FrameUnit(

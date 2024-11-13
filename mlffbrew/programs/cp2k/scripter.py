@@ -1,5 +1,5 @@
 from copy import deepcopy
-from samsarabrew.typing import Box
+from mlffbrew.typing import Box
 
 __all__ = ["write", "read", "modify", "modify_box", "modify_coord", "baselines"]
 

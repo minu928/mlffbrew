@@ -1,5 +1,5 @@
 import numpy as np
-from samsarabrew.typing import Box, Stress, Virial
+from mlffbrew.typing import Box, Stress, Virial
 
 
 def calculate_volume(box: Box, *, dim: int = 3) -> float:

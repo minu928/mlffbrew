@@ -21,5 +21,6 @@ setup(
     keywords=["MachineLearningForceField", "MolecularDynamics", "DensityFunctionalTheory"],
     python_requires=">=3.10",
     package_data={"": ["*"]},
+    install_requires=["numpy>=1.22.3,<2.0.0", "atombrew>=0.0.9"],
     zip_safe=False,
 )

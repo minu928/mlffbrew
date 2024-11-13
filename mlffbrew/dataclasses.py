@@ -1,6 +1,6 @@
 import numpy as np
 from dataclasses import dataclass
-from samsarabrew.typing import npstr, npf64, Box, Atoms, Coords, Energy, Stress, Virial, Force
+from mlffbrew.typing import npstr, npf64, Box, Atoms, Coords, Energy, Stress, Virial, Force
 
 
 @dataclass
