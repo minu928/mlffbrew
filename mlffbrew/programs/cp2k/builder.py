@@ -36,6 +36,5 @@ def build(
         data = deepcopy(script_info)
         data = cp2k.scripter.modify_coord(data=data)
         data = cp2k.scripter.modify_box(data=data, box=box)
-        lines = cp2k.scripter.write(data=data)
-        with open(os.path.join(folder_path, "run.inp"), "w+") as f:
-            f.writelines(lines)
+        file = os.path.join(folder_path, "run.inp")
+        cp2k.scripter.write(file=file, data=data, mode="w+")

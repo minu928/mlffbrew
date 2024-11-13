@@ -70,17 +70,22 @@ baselines = deepcopy(__BASE_SCRIPT_INFO)
 del deepcopy
 
 
-def write(data: ScriptData, *, indent_level=0) -> str:
+def join(data: ScriptData, *, indent_level=0) -> str:
     script = ""
     indent = "\t" * indent_level
     for key, val in data.items():
         if isinstance(val, dict):
             script += f"{indent}&{key}\n"
-            script += write(data=val, indent_level=indent_level + 1)
-            script += f"{indent}&END {key}\n"
+            script += join(data=val, indent_level=indent_level + 1)
+            script += f"{indent}&END {key.split()[0]}\n"
         else:
             script += f"{indent}{key} {val}\n"
     return script
+
+
+def write(file: str, data: ScriptData, *, mode: str = "w") -> None:
+    with open(file=file, mode=mode) as f:
+        f.writelines(join(data=data))
 
 
 def read(file: str, *, head_word: str = "&", tail_word: str = "&END") -> ScriptData:
