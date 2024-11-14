@@ -8,9 +8,9 @@ except ImportError:
     __version__ = "unkown"
 
 
-from mlffbrew import slurm
-from mlffbrew import programs
-from mlffbrew import unit
-from mlffbrew import space
+from . import slurm
+from . import programs
+from . import unit
+from . import space
 
 __all__ = ["slurm", "programs", "unit", "space"]

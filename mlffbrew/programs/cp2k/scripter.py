@@ -2,7 +2,7 @@ import numpy as np
 from copy import deepcopy
 from mlffbrew.typing import Box, npstr, npf64, ScriptData, Dict, Any
 
-__all__ = ["write", "read", "modify", "modify_box", "modify_coord", "baselines"]
+__all__ = ["write", "read", "modify", "modify_box", "modify_coord", "base_scipt_data"]
 
 
 __BASE_SCRIPT_INFO = {
@@ -66,7 +66,7 @@ __BASE_SCRIPT_INFO = {
         },
     },
 }
-baselines = deepcopy(__BASE_SCRIPT_INFO)
+base_scipt_data = deepcopy(__BASE_SCRIPT_INFO)
 del deepcopy
 
 

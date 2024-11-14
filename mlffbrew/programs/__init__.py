@@ -1,3 +1,4 @@
-from mlffbrew.programs import cp2k
+from . import cp2k
+from . import lammps
 
-__all__ = ["cp2k"]
+__all__ = ["cp2k", "lammps"]
