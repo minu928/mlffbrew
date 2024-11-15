@@ -1,73 +1,9 @@
 import numpy as np
-from copy import deepcopy
-from mlffbrew.typing import Box, npstr, npf64, ScriptData, Dict, Any
-
-__all__ = ["write", "read", "modify", "modify_box", "modify_coord", "baselines"]
+from mlffbrew.typing import Box, npstr, npf64, ScriptData
+from mlffbrew.programs.scripter import modify
 
 
-__BASE_SCRIPT_INFO = {
-    "GLOBAL": {
-        "PROJECT": "RUN",
-        "RUN_TYPE": "ENEGY_FORCE",
-    },
-    "FORCE_EVAL": {
-        "METHOD": "Quickstep",
-        "STRESS_TENSOR": "ANALYTICAL",
-        "DFT": {
-            "BASIS_SET_FILE_NAME": "BASIS_MOLOPT_SCAN",
-            "POTENTIAL_FILE_NAME": "GTH_POTENTIALS_SCAN",
-            "CHARGE": 0,
-            "MULTIPLICITY": 1,
-            "MGRID": {
-                "CUTOFF": 1200,
-                "REL_CUTOFF": 60,
-                "NGRIDS": 5,
-            },
-            "QS": {
-                "METHOD": "GPW",
-                "EPS_DEFAULT": 1.0e-14,
-                "EXTRAPOLATION": "ASPC",
-            },
-            "POISSON": {
-                "PERIODIC": "XYZ",
-            },
-            "SCF": {
-                "SCF_GUESS": "RESTART",
-                "MAX_SCF": 50,
-                "EPS_SCF": 1.0e-7,
-                "OUTER_SCF": {
-                    "EPS_SCF": 1.0e-7,
-                    "MAX_SCF": 10,
-                },
-                "OT": {"PRECONDITIONER": "FULL_SINGLE_INVERSE", "MINIMIZER": "CG"},
-            },
-            "XC": {
-                "XC_FUNCTIONAL": {
-                    "MGGA_X_R2SCAN": {},
-                    "MGGA_C_R2SCAN": {},
-                }
-            },
-        },
-        "SUBSYS": {
-            "CELL": {
-                "A": "12.6 0.0 0.0",
-                "B": "0.0 12.6 0.0",
-                "C": "0.0 0.0 12.6",
-            },
-            "TOPOLOGY": {"COORD_FILE_NAME": "./run.xyz", "COORD_FILE_FORMAT": "XYZ"},
-            "KIND H": {
-                "BASIS_SET": "TZV2P-MOLOPT-SCAN-GTH-q1",
-                "POTENTIAL": "GTH-SCAN-1",
-            },
-            "KIND O": {
-                "BASIS_SET": "TZV2P-MOLOPT-SCAN-GTH-q6",
-                "POTENTIAL": "GTH-SCAN-6",
-            },
-        },
-    },
-}
-baselines = deepcopy(__BASE_SCRIPT_INFO)
-del deepcopy
+__all__ = ["write", "read", "modify", "modify_box", "modify_coord", "base_scipt_data"]
 
 
 def join(data: ScriptData, *, indent_level=0) -> str:
@@ -106,25 +42,6 @@ def read(file: str, *, head_word: str = "&", tail_word: str = "&END") -> ScriptD
                     key, value = line.split(maxsplit=1)
                     stack[-1][key] = value
     return script_info
-
-
-def modify(
-    data: ScriptData,
-    what: Dict[str, Any],
-    *,
-    add: bool = False,
-    head: str = None,
-    sep: str = "/",
-) -> ScriptData:
-    headlist = head.split(sep=sep)
-    sub_data = data
-    for this_head in headlist:
-        sub_data = sub_data[this_head]
-    for key, val in what.items():
-        if key not in sub_data and not add:
-            raise KeyError(f"Can not moify data, Key({key}) absent")
-        sub_data[key] = val
-    return data
 
 
 def modify_box(data: ScriptData, box: Box, *, dim: int = 3) -> ScriptData:
