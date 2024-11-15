@@ -1,6 +1,6 @@
 from numpy.random import randint
 from typing import Dict, Union, List, Literal, Tuple, Any
-from mlffbrew.typing import ScriptFileOrScriptData, ScriptData, ScriptFile
+from mlffbrew.typing import ScriptFileOrScriptData, ScriptData, ScriptFile, Ensemble
 
 SimulationParams = Dict[str, Union[List, str]]
 Param = str
@@ -27,7 +27,7 @@ def generate_conditioniteration(
     simulation_params: SimulationParams,
     *,
     defaults=DEFAULT_CONDITION_PARAMS,
-) -> List[Tuple[Init, Condition]]:
+) -> List[Tuple[Init, Ensemble, Condition]]:
 
     ensemble = get_params(simulation_params, "ensemble")[0]
     nsteps = get_params(simulation_params, "nsteps")[0]
@@ -39,6 +39,7 @@ def generate_conditioniteration(
     return [
         (
             init,
+            ensemble,
             {
                 "TEMP": temp,
                 "PRES": pres,
@@ -56,6 +57,7 @@ def generate_conditioniteration(
 def build(
     script: ScriptFileOrScriptData,
     simulation_params: SimulationParams,
+    elements: List[str],
     *,
     workspace: str = "./",
     folderhead: str = "lammps",
@@ -72,18 +74,21 @@ def build(
 
     script_data: ScriptData = lammps.scripter.read(script) if isinstance(script, ScriptFile) else script
     abs_workpath = os.path.abspath(workspace)
-    for i, (init, condition) in enumerate(generate_conditioniteration(simulation_params=simulation_params)):
+
+    for i, (init, ensemble, condition) in enumerate(generate_conditioniteration(simulation_params=simulation_params)):
 
         this_folderpath = os.path.join(abs_workpath, f"{folderhead}.{str(i).zfill(maxint)}")
         os.makedirs(this_folderpath, exist_ok=exist_ok)
 
-        # * Write the script
-        this_script_data = deepcopy(script_data)
-        this_script_data = lammps.scripter.modify_variables(data=this_script_data, add=True, **condition)
-        this_script_path = os.path.join(this_folderpath, "in.lammps")
-        lammps.scripter.write(this_script_path, data=this_script_data)
-
         # * Write the Initial
         this_init_path = os.path.join(this_folderpath, "in.lmps")
         home = Home(init)
-        home.write(this_init_path, stop=1, verbose=False, fmt="lmps")
+        home.write(this_init_path, stop=1, verbose=False, fmt="lmps", mode="w+")
+
+        # * Write the script
+        this_script_data = deepcopy(script_data)
+        this_script_data = lammps.scripter.modify_variables(data=this_script_data, add=True, **condition)
+        this_script_data = lammps.scripter.modify_ensemble(data=this_script_data, ensemble=ensemble)
+        this_script_data = lammps.scripter.modify_mass(data=this_script_data, elements=elements)
+        this_script_path = os.path.join(this_folderpath, "in.lammps")
+        lammps.scripter.write(this_script_path, data=this_script_data)

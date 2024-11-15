@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Dict, Union
+from typing import Dict, Union, Literal
 from numpy.typing import NDArray
 
 
@@ -19,3 +19,5 @@ Atoms = NDArray[npstr]
 ScriptFile = str
 ScriptData = Dict[str, Union[Dict, str]]
 ScriptFileOrScriptData = Union[ScriptFile, ScriptData]
+
+Ensemble = Literal["nve", "nvt", "npt"]
