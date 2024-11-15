@@ -1,10 +1,11 @@
-from mlffbrew.typing import List, npstr
+from typing import List
+from mlffbrew.typing import npstr, ScriptFileOrScriptData, ScriptFile, ScriptData
 
 __all__ = ["build"]
 
 
 def build(
-    script: str,
+    script: ScriptFileOrScriptData,
     coords_files: List[npstr],
     *,
     workspace: str = "./",
@@ -15,17 +16,18 @@ def build(
 
     try:
         import os
-        import atombrew as atb
+        from atombrew import Home
         from copy import deepcopy
         from mlffbrew.programs import cp2k
-    except:
-        raise ImportError("Can Not Import.")
+    except Exception as e:
+        raise ImportError(f"Can Not Import, {e}")
 
-    script_info = cp2k.scripter.read(script) if isinstance(script, str) else script
+    script_data: ScriptData = cp2k.scripter.read(script) if isinstance(script, ScriptFile) else script
+    abs_workpath = os.path.abspath(workspace)
     for i, coords_file in enumerate(coords_files):
-        folder_path = os.path.join(workspace, f"{folderhead}.{str(i).zfill(maxint)}")
+        folder_path = os.path.join(abs_workpath, f"{folderhead}.{str(i).zfill(maxint)}")
         os.makedirs(folder_path, exist_ok=exist_ok)
-        home = atb.Home(coords_file)
+        home = Home(coords_file)
 
         # * Write Coord
         coord_path = os.path.join(folder_path, "run.xyz")
@@ -33,7 +35,7 @@ def build(
 
         # * Write Script
         box = home.box
-        data = deepcopy(script_info)
+        data = deepcopy(script_data)
         data = cp2k.scripter.modify_coord(data=data)
         data = cp2k.scripter.modify_box(data=data, box=box)
         file = os.path.join(folder_path, "run.inp")
