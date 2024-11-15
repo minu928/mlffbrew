@@ -1,7 +1,7 @@
 from typing import List
-from mlffbrew.typing import ScriptData, Ensemble
-from mlffbrew.programs.scripter import modify
 from atombrew import chemistry
+from mlffbrew.typing import ScriptData, Ensemble, Element
+from mlffbrew.programs.scripter import modify
 
 
 GEN_CODE = {
@@ -78,6 +78,6 @@ def modify_ensemble(data: ScriptData, ensemble: Ensemble, *, add: bool = True) -
     return modify(data=data, head="fix", add=add, what={f"gen_{ensemble}": None})
 
 
-def modify_mass(data: ScriptData, elements=List[str]) -> ScriptData:
+def modify_mass(data: ScriptData, elements: List[Element]) -> ScriptData:
     data["mass"] = {str(i): str(chemistry.elements.get_mass(e)) for i, e in enumerate(elements, start=1)}
     return data

@@ -21,3 +21,4 @@ ScriptData = Dict[str, Union[Dict, str]]
 ScriptFileOrScriptData = Union[ScriptFile, ScriptData]
 
 Ensemble = Literal["nve", "nvt", "npt"]
+Element = str

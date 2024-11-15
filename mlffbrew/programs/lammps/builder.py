@@ -1,6 +1,6 @@
 from numpy.random import randint
 from typing import Dict, Union, List, Literal, Tuple, Any
-from mlffbrew.typing import ScriptFileOrScriptData, ScriptData, ScriptFile, Ensemble
+from mlffbrew.typing import ScriptFileOrScriptData, ScriptData, ScriptFile, Ensemble, Element
 
 SimulationParams = Dict[str, Union[List, str]]
 Param = str
@@ -57,7 +57,7 @@ def generate_conditioniteration(
 def build(
     script: ScriptFileOrScriptData,
     simulation_params: SimulationParams,
-    elements: List[str],
+    elements: List[Element],
     *,
     workspace: str = "./",
     folderhead: str = "lammps",
