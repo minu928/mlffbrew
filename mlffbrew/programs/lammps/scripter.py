@@ -9,7 +9,7 @@ GEN_CODE = {
     "gen_npt": f"fix{' '*13}" + "gen_npt all npt temp ${TEMP} ${TEMP} ${TAU_T} iso ${PRES} ${PRES} ${TAU_P}",
     "gen_nvt": f"fix{' '*13}" + "gen_nvt all nvt temp ${TEMP} ${TEMP} ${TAU_T}",
     "gen_nve": "",
-    "gen_dump": f"dump{' '*12}" + "gen_dump all custom ${DUMP_FREQ} traj/*.lammpstrj id type x y z",
+    "gen_dump": f"dump{' '*12}" + "gen_dump all custom ${DUMP_FREQ} traj/*.lammpstrj id type x y z fx fy fz",
     "gen_velocity": f"velocity{' '*8}" + "all create ${TEMP} ${SEED} mom yes rot yes dist gaussian",
 }
 PAIRS = {
