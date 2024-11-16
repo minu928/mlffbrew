@@ -7,6 +7,7 @@ npf64 = np.float64
 npstr = np.str_
 
 Number = Union[float, int]
+FilePath = str
 
 Box = NDArray[npf64]
 Stress = NDArray[npf64]

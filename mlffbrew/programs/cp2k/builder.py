@@ -1,12 +1,12 @@
 from typing import List
-from mlffbrew.typing import npstr, ScriptFileOrScriptData, ScriptFile, ScriptData
+from mlffbrew.typing import ScriptFileOrScriptData, ScriptFile, ScriptData, FilePath
 
 __all__ = ["build"]
 
 
 def build(
     script: ScriptFileOrScriptData,
-    coords_files: List[npstr],
+    coords_files: List[FilePath],
     *,
     workspace: str = "./",
     folderhead: str = "cp2k",
