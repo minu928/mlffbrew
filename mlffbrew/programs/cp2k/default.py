@@ -1,5 +1,6 @@
 from mlffbrew.typing import ScriptData
 
+
 script_data: ScriptData = {
     "GLOBAL": {
         "PROJECT": "RUN",

@@ -1,8 +1,9 @@
 from typing import Tuple
 from mlffbrew.dataclasses import FrameData, FrameUnit
+from mlffbrew.typing import FilePath
 
 
-def parse_logfile(logfile: str) -> Tuple[FrameData, FrameUnit]:
+def parse_logfile(logfile: FilePath) -> Tuple[FrameData, FrameUnit]:
     data = {
         "version": None,
         "energy": None,

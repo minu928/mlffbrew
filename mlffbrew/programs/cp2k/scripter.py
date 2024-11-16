@@ -1,5 +1,5 @@
 import numpy as np
-from mlffbrew.typing import Box, npstr, npf64, ScriptData
+from mlffbrew.typing import Box, npstr, npf64, ScriptData, ScriptFile
 from mlffbrew.programs.scripter import modify
 
 
@@ -19,12 +19,12 @@ def join(data: ScriptData, *, indent_level=0) -> str:
     return script
 
 
-def write(file: str, data: ScriptData, *, mode: str = "w") -> None:
+def write(file: ScriptFile, data: ScriptData, *, mode: str = "w") -> None:
     with open(file=file, mode=mode) as f:
         f.writelines(join(data=data))
 
 
-def read(file: str, *, head_word: str = "&", tail_word: str = "&END") -> ScriptData:
+def read(file: ScriptFile, *, head_word: str = "&", tail_word: str = "&END") -> ScriptData:
     script_info = {}
     stack = [script_info]
     with open(file, "r") as f:

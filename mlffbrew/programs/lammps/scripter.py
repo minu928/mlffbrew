@@ -1,6 +1,6 @@
 from typing import List
 from atombrew import chemistry
-from mlffbrew.typing import ScriptData, Ensemble, Element
+from mlffbrew.typing import ScriptData, Ensemble, Element, ScriptFile
 from mlffbrew.programs.scripter import modify
 
 
@@ -44,12 +44,12 @@ def join(data: ScriptData) -> str:
     return "\n".join(script_lines)
 
 
-def write(file: str, data: ScriptData, *, mode: str = "w") -> None:
+def write(file: ScriptFile, data: ScriptData, *, mode: str = "w") -> None:
     with open(file=file, mode=mode) as f:
         f.writelines(join(data=data))
 
 
-def read(file: str) -> ScriptData:
+def read(file: ScriptFile) -> ScriptData:
     script_info: ScriptData = {}
     with open(file) as f:
         for line in f:

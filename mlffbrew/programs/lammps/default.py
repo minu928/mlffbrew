@@ -1,4 +1,7 @@
-script_data = {
+from mlffbrew.typing import ScriptData
+
+
+script_data: ScriptData = {
     "variable": {
         "NSTEPS": None,
         "TEMP": None,
