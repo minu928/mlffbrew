@@ -1,11 +1,11 @@
 from typing import Tuple
-from mlffbrew.dataclasses import FrameData, FrameUnit
+from mlffbrew.mdpy import State
+from mlffbrew.unit import StateUnit
 from mlffbrew.typing import FilePath
 
 
-def parse_logfile(logfile: FilePath) -> Tuple[FrameData, FrameUnit]:
+def parse_logfile(logfile: FilePath) -> Tuple[State, StateUnit]:
     data = {
-        "version": None,
         "energy": None,
         "coords": [],
         "atoms": [],
@@ -26,11 +26,6 @@ def parse_logfile(logfile: FilePath) -> Tuple[FrameData, FrameUnit]:
         is_force_line_start = False
         is_stress_line_start = False
         while line := f.readline():
-            # LINE: version
-            if line.startswith(" CP2K| version"):
-                data["version"] = line.split()[-1]
-                continue
-
             # LINE: box
             if line.startswith(" CELL| Vector"):
                 splited_line = line.split()
@@ -93,4 +88,4 @@ def parse_logfile(logfile: FilePath) -> Tuple[FrameData, FrameUnit]:
                 data["stress"].append(line.split()[2:])
                 continue
 
-    return FrameData(**data), FrameUnit(**unit)
+    return State(**data), StateUnit(**unit)

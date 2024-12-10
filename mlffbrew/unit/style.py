@@ -1,7 +1,7 @@
-from mlffbrew.dataclasses import FrameUnit
+from mlffbrew.unit._dataclass import StateUnit
 
 
-metal = FrameUnit(
+metal = StateUnit(
     energy="eV",
     coords="angstrom",
     atoms=None,
