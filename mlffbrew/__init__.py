@@ -12,5 +12,6 @@ from . import slurm
 from . import programs
 from . import unit
 from . import space
+from . import dataclass
 
-__all__ = ["slurm", "programs", "unit", "space"]
+__all__ = ["slurm", "programs", "unit", "space", "dataclass"]

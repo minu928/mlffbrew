@@ -1,5 +1,5 @@
 from typing import Tuple
-from mlffbrew.mdpy import State
+from mlffbrew.dataclass import State
 from mlffbrew.unit import StateUnit
 from mlffbrew.typing import FilePath
 

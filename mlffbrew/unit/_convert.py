@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from mlffbrew.mdpy import State
+from mlffbrew.dataclass import State
 from mlffbrew.unit._dataclass import StateUnit
 from mlffbrew.unit._mutliplier import create_multiplier
 
